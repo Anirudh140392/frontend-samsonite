@@ -43,7 +43,7 @@ const ExistingKeywordsDatatable = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/bunge/exsisting-negative-keyword?platform=${operator}&start_date=${startDate}&end_date=${endDate}`;
+            const url = `https://react-api-script.onrender.com/Samsonite/exsisting-negative-keyword?platform=${operator}&start_date=${startDate}&end_date=${endDate}`;
             const cacheKey = `cache:GET:${url}`;
 
             // Check cache first
@@ -117,7 +117,7 @@ const ExistingKeywordsDatatable = () => {
         });
 
         try {
-            const response = await fetch(`https://react-api-script.onrender.com/bunge/delete_negative_keyword?${params.toString()}`, {
+            const response = await fetch(`https://react-api-script.onrender.com/Samsonite/delete_negative_keyword?${params.toString()}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

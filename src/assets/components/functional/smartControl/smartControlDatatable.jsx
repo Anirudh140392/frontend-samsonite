@@ -56,7 +56,7 @@ const SmartControlDatatable = () => {
     }
 
     try {
-      const response = await fetch(`https://react-api-script.onrender.com/bunge/show-rule?platform=${operator}`, {
+      const response = await fetch(`https://react-api-script.onrender.com/Samsonite/show-rule?platform=${operator}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -216,7 +216,7 @@ const SmartControlDatatable = () => {
     setUpdatingRuleId(ruleId);
 
     try {
-      const response = await fetch(`https://react-api-script.onrender.com/bunge/play-pause-rule?rule_id=${ruleId}&platform=${operator}`, {
+      const response = await fetch(`https://react-api-script.onrender.com/Samsonite/play-pause-rule?rule_id=${ruleId}&platform=${operator}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -252,7 +252,7 @@ const SmartControlDatatable = () => {
     setDeletingRuleId(ruleId);
 
     try {
-      const response = await fetch(`https://react-api-script.onrender.com/bunge/delete-rule?rule_id=${ruleId}&platform=${"Amazon"}`, {
+      const response = await fetch(`https://react-api-script.onrender.com/Samsonite/delete-rule?rule_id=${ruleId}&platform=${"Amazon"}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

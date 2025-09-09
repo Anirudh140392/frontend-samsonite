@@ -45,7 +45,7 @@ const OverviewState = (props) => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `${host}/bunge/${endpoint}?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
+            const url = `${host}/Samsonite/${endpoint}?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);

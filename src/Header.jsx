@@ -45,7 +45,7 @@ const Header = () => {
     setShowSelectedOperator(operatorType);
   }, [location.search]);*/}
 
-  const options = [{ label: "Bunge", value: "Bunge" }];
+  const options = [{ label: "Samsonite", value: "Samsonite" }];
 
   const onHamburgerClick = () => {
     let sideNavMain = document.getElementsByClassName(
@@ -99,12 +99,9 @@ const Header = () => {
             </Dropdown.Toggle>
 
             <Dropdown.Menu>
+
+            
              
-              <OperatorList
-                showSelectedOperator={showSelectedOperator}
-                setShowSelectedOperator={setShowSelectedOperator}
-                selectedOperator={OPERATOR.ZEPTO}
-              />
                <OperatorList
                 showSelectedOperator={showSelectedOperator}
                 setShowSelectedOperator={setShowSelectedOperator}

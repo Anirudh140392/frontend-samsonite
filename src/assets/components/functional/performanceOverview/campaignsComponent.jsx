@@ -767,7 +767,7 @@ const CampaignsComponent = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/bunge/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
+            const url = `https://react-api-script.onrender.com/Samsonite/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);
@@ -834,7 +834,7 @@ const CampaignsComponent = () => {
             const token = localStorage.getItem("accessToken");
             const startDate = formatDate(dateRange[0].startDate);
             const endDate = formatDate(dateRange[0].endDate);
-            const url = `https://react-api-script.onrender.com/bunge/campaign_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}`;
+            const url = `https://react-api-script.onrender.com/Samsonite/campaign_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}`;
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);
@@ -879,7 +879,7 @@ const CampaignsComponent = () => {
                 campaign_type: campaignType,
                 platform: operator,
             });
-            const response = await fetch(`https://react-api-script.onrender.com/bunge/update_campaign_status?${params.toString()}`, {
+            const response = await fetch(`https://react-api-script.onrender.com/Samsonite/update_campaign_status?${params.toString()}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

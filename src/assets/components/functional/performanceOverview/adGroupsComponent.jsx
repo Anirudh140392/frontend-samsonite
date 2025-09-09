@@ -49,7 +49,7 @@ const AdGroupsComponent = () => {
 
         try {
             const response = await fetch(
-                `https://react-api-script.onrender.com/bunge/adgroups?start_date=${startDate}&end_date=${endDate}&platform=Amazon`,
+                `https://react-api-script.onrender.com/Samsonite/adgroups?start_date=${startDate}&end_date=${endDate}&platform=Amazon`,
                 {
                     method: "GET",
                     headers: {
@@ -99,7 +99,7 @@ const AdGroupsComponent = () => {
                 platform: operator,
                 campaign_id: campaignId
             });
-            const response = await fetch(`https://react-api-script.onrender.com/bunge/toggle_ad_group?${params.toString()}`, {
+            const response = await fetch(`https://react-api-script.onrender.com/Samsonite/toggle_ad_group?${params.toString()}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

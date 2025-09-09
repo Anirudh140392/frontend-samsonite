@@ -150,7 +150,7 @@ const Navbar = () => {
                     abortControllerRef.current.abort();
                 }
 
-                if (operatorName !== "Flipkart") {
+                if (operatorName !== "Zepto") {
                     setWalletBalance("N/A");
                     return;
                 }
@@ -189,7 +189,7 @@ const Navbar = () => {
                 }
 
                 // Use operatorName instead of undefined 'operator'
-                const url = `https://react-api-script.onrender.com/bunge/wallet-balance?start_date=${startDate}&end_date=${endDate}&platform=${operatorName}`;
+                const url = `https://react-api-script.onrender.com/Samsonite/wallet-balance?start_date=${startDate}&end_date=${endDate}&platform=${operatorName}`;
                 const cacheKey = `cache:GET:${url}`;
 
                 // Check cache first
@@ -355,7 +355,7 @@ const Navbar = () => {
                                         }
                                     />
                                 )}
-                                {["Flipkart","Amazon","Zepto","BigBasket"].includes(operatorName) && (
+                                {["Amazon","Zepto","BigBasket"].includes(operatorName) && (
                                     <RedirectLink
                                         url={`/rules${operatorTypeParams === ""
                                             ? `?operator=${OPERATOR.AMAZON}`
@@ -409,7 +409,7 @@ const Navbar = () => {
                                         }
                                     />
                                 )}
-                                {!["Amazon","Flipkart","Swiggy"].includes(operatorName) && (
+                                {!["Amazon","Swiggy"].includes(operatorName) && (
                                     <RedirectLink
                                         url={`/negative-keywords${operatorTypeParams === ""
                                             ? `?operator=${OPERATOR.AMAZON}`

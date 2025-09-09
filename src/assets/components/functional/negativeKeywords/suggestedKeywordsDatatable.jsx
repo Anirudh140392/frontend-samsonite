@@ -44,7 +44,7 @@ const SuggestedKeywordsDatatable = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/bunge/suggested-negative-keyword?platform=${operator}&start_date=${startDate}&end_date=${endDate}`;
+            const url = `https://react-api-script.onrender.com/Samsonite/suggested-negative-keyword?platform=${operator}&start_date=${startDate}&end_date=${endDate}`;
             const cacheKey = `cache:GET:${url}`;
 
             // Check cache first
@@ -122,7 +122,7 @@ const SuggestedKeywordsDatatable = () => {
         });
 
        try {
-    const url = `https://react-api-script.onrender.com/bunge/add_negative_keyword`;
+    const url = `https://react-api-script.onrender.com/Samsonite/add_negative_keyword`;
     const cacheKey = `cache:POST:${url}:${params.toString()}`; // Adjusted for POST caching
     const cached = getCache(cacheKey);
 
