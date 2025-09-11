@@ -69,9 +69,9 @@ const normalizeFilters = (filters) => {
         };
         const getUpdateRuleUrl = () => {
     if (platform === "Zepto") {
-        return `https://react-api-script.onrender.com/Samsonite/update-rule?rule_id=${ruleData.rule_id}&platform=${platform}`;
+        return `https://react-api-script.onrender.com/samsonite/update-rule?rule_id=${ruleData.rule_id}&platform=${platform}`;
     } else if (platform === "BigBasket") {
-        return `http://react-api-script.onrender.com/Samsonite/update-rule?platform=${platform}&rule_id=${ruleData.rule_id}`;
+        return `http://react-api-script.onrender.com/samsonite/update-rule?platform=${platform}&rule_id=${ruleData.rule_id}`;
     }
     return "";
 };

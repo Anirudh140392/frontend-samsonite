@@ -45,7 +45,7 @@ const Header = () => {
     setShowSelectedOperator(operatorType);
   }, [location.search]);*/}
 
-  const options = [{ label: "Samsonite", value: "Samsonite" }];
+  const options = [{ label: "Samsonite", value: "samsonite" }];
 
   const onHamburgerClick = () => {
     let sideNavMain = document.getElementsByClassName(

@@ -337,7 +337,7 @@ const ProductsComponent = () => {
          {
             field: "fsn_id",
             headerName: "FSN ID",
-            minWidth: 150,
+            minWidth: 200,
         },
         
         {
@@ -347,7 +347,7 @@ const ProductsComponent = () => {
                 <a href={params.row.page_url} target="_blank"
                     rel="noopener noreferrer">{params.row.product_name}</a>
             ),
-            minWidth: 200
+            minWidth: 300,
         },
 
         /*{
@@ -390,186 +390,62 @@ const ProductsComponent = () => {
             valueOptions: STATUS_MAP
         },*/
 
-         {
-            field: "ml",
-            headerName: "Quantity",
-            minWidth: 150,
-        },
-         {
-            field: "avg_selling_price",
-            headerName: "AVG SELLNG PRICE",
-            minWidth: 150,
-        },
+
         {
             field: "views",
             headerName: "IMPRESSIONS",
             minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.views} percentValue={params.row.views_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
+           
         },
         
-        {
-            field: "clicks",
-            headerName: "CLICKS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.clicks} percentValue={params.row.clicks_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
+        
         
         {
-            field: "cost",
+            field: "ad_spend",
             headerName: "SPEND",
             minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cost} percentValue={params.row.cost_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-         {
-            field: "orders",
-            headerName: "ORDERS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.orders} percentValue={params.row.orders_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-         {
-            field: "total_converted_revenue",
-            headerName: "SALES",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.total_converted_revenue} percentValue={params.row.total_converted_revenue_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-         {
-            field: "cpc",
-            headerName: "CPC",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cpc} percentValue={params.row.cpc_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "ctr",
-            headerName: "CTR",
-            minWidth: 150,
-            renderCell: (params) => (
-                <NewPercentageDataComponent firstValue={params.row.ctr} secValue={params.row.ctr_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
+           
         },
          {
             field: "cvr",
             headerName: "CVR",
             minWidth: 150,
-            renderCell: (params) => (
-                <NewPercentageDataComponent firstValue={params.row.cvr} secValue={params.row.cvr_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
+           
         },
-           {
+         {
+            field: "direct_units_sold",
+            headerName: "DIRECT ORDERS",
+            minWidth: 150,
+           
+        },
+        {
+            field: "indirect_units_sold",
+            headerName: "INDIRECT ORDERS",
+            minWidth: 150,
+           
+        },
+         {
+            field: "direct_revenue",
+            headerName: "DIRECT REVENUE",
+            minWidth: 150,
+           
+        },
+         {
+            field: "indirect_revenue",
+            headerName: "INDIRECT REVENUE",
+            minWidth: 150,
+           
+        },
+         {
             field: "roi",
-            headerName: "ROAS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.roi} percentValue={params.row.roi_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-
-        {
-            field: "acos",
-            headerName: "ACOS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.acos} percentValue={params.row.acos_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-         {
-            field: "Ads_Volume",
-            headerName: "ADS VOLUME",
-            minWidth: 150,
-             
-          
-        },
-
-         {
-            field: "ads_metric_ton",
-            headerName: "ADS METRIC TON",
-            minWidth: 150,
-             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.ads_metric_ton} percentValue={params.row.ads_metric_ton_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-          
-        },
-         {
-            field: "cpl_ads",
-            headerName: "ADS CPL",
-             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cpl_ads} percentValue={params.row.cpl_ads_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-            
-          
-        },
-
-        {
-            field: "overall_sales",
-            headerName: "OVERALL SALES",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.overall_sales} percentValue={params.row.overall_sales_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-         {
-            field: "overall_metric_ton",
-            headerName: "OVERALL METRIC TON",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.overall_metric_ton} percentValue={params.row.overall_metric_ton_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-          {
-            field: "overall_cpl",
-            headerName: "OVERALL CPL",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.overall_cpl} percentValue={params.row.overall_cpl_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "campaign_name",
-            headerName: "CAMPAIGN",
+            headerName: "ROI",
             minWidth: 150,
            
         },
+        
+
+
          
-    
-        {
-            field: "ad_group_name",
-            headerName: "AD GROUP",
-            minWidth: 150,
-           
-        },
-         {
-            field: "ad_type",
-            headerName: "AD TYPE",
-            minWidth: 150,
-           
-        },
-       
     ];
 
     const ProductsColumnZepto = [
@@ -910,7 +786,7 @@ const ProductsComponent = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/Samsonite/products?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
+            const url = `https://react-api-script.onrender.com/samsonite/product?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);

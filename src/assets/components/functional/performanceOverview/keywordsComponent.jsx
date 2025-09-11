@@ -50,7 +50,7 @@ const KeywordsComponent = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/Samsonite/keywords?start_date=${startDate}&end_date=${endDate}&platform=${operator}&campaign_name=${campaignName}`;
+            const url = `https://react-api-script.onrender.com/samsonite/keyword?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);
@@ -969,7 +969,7 @@ const KeywordsComponent = () => {
                 keyword: keywordName,
                 start_date: formatDate(startDate),
             });
-            const response = await fetch(`https://react-api-script.onrender.com/Samsonite/keyword_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}&keyword=${keywordName}`, {
+            const response = await fetch(`https://react-api-script.onrender.com/samsonite/keyword_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}&keyword=${keywordName}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",
@@ -1021,7 +1021,7 @@ const KeywordsComponent = () => {
                 ad_group_id: adGroupId,
                 campaign_id: campaignId
             });
-            const response = await fetch(`https://react-api-script.onrender.com/Samsonite/toggle_keyword_or_target_state?${params.toString()}`, {
+            const response = await fetch(`https://react-api-script.onrender.com/samsonite/toggle_keyword_or_target_state?${params.toString()}`, {
                 method: "PUT",
                 headers: {
                     "Authorization": `Bearer ${token}`,

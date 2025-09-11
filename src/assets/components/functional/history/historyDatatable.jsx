@@ -101,7 +101,7 @@ const HistoryDatatable = () => {
         }
 
         try {
-            const response = await fetch(`https://react-api-script.onrender.com/Samsonite/history?platform=${operator}`, {
+            const response = await fetch(`https://react-api-script.onrender.com/samsonite/history?platform=${operator}`, {
                 method: "GET",
                 headers: {
                     "Content-Type": "application/json",

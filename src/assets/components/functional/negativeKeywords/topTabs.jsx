@@ -28,7 +28,7 @@ const TopTabs = (props) => {
                         setShowActiveTab={setShowActiveTab}
                         setValue={NEGATIVETABS.SUGGESTED} />
                     }
-                    {['Amazon','Flipkart'].includes(operatorName) &&
+                    {['Amazon'].includes(operatorName) &&
                         <TabList
                             isShowCount={true}
                             tabText="Exisiting Keywords"

@@ -41,7 +41,7 @@ const ProductAnalyticsDatatable = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/Samsonite/product-analytics?platform=${operator}&start_date=${startDate}&end_date=${endDate}`;
+            const url = `https://react-api-script.onrender.com/samsonite/product-analytics?platform=${operator}&start_date=${startDate}&end_date=${endDate}`;
             const cacheKey = `cache:GET:${url}`;
 
             // Serve from cache immediately if available and skip any request

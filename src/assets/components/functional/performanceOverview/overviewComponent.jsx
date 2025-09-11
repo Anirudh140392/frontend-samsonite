@@ -179,59 +179,29 @@ const OverviewComponent = () => {
     ];
 
      const CategoryColumnsFlipkart = [
-        { field: "brand", headerName: "BRAND", minWidth: 150 },
         {
-            field: "category",
-            headerName: "CATEGORY",
-            minWidth: 150,
-            type: "number",
-            align: "left",
-            headerAlign: "left",
+            field: "Campaign_Tags",
+            headerName: "CAMPAIGN",
+            minWidth: 200,
+           
         },
-         {
-            field: "avg_selling_price",
-            headerName: "AVG SELLING PRICE",
+        {
+            field: "Spend",
+            headerName: "SPEND",
             minWidth: 150,
            
         },
-
         {
-            field: "views",
-            headerName: "IMPRESSIONS",
-            minWidth: 150,
-            type: "number", align: "left",
-            headerAlign: "left",
-             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.views} percentValue={params.row.views_diff} />
-            ),
-        },
-        {
-            field: "clicks",
+            field: "Clicks",
             headerName: "CLICKS",
             minWidth: 150,
-            type: "number", align: "left",
-            headerAlign: "left",
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.clicks} percentValue={params.row.clicks_diff} />
-            ),
-        },
-          {
-            field: "ad_spend",
-            headerName: "SPEND",
-            minWidth: 150,
-            type: "number", align: "left",
-            headerAlign: "left",
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.ad_spend} percentValue={params.row.ad_spend_diff} />
-            ),
+           
         },
          {
-            field: "orders",
-            headerName: "ORDERS",
+            field: "Impressions",
+            headerName: "IMPRESSIONS",
             minWidth: 150,
-            type: "number", align: "left",
-            headerAlign: "left",
-
+           
         },
          {
             field: "Sales",
@@ -241,80 +211,64 @@ const OverviewComponent = () => {
             headerAlign: "left",
 
         },
-
-
-        { field: "cpc", headerName: "CPC", minWidth: 150,renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cpc} percentValue={params.row.cpc_diff}/>
-            ), },
-       
-        { field: "ctr", headerName: "CTR", minWidth: 150, renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.ctr} percentValue={params.row.ctr_diff} />
-            ),},
-        { field: "cvr", headerName: "CVR", minWidth: 150,renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cvr} percentValue={params.row.cvr_diff}/>
-            ),},
-             { field: "roi", headerName: "ROAS", minWidth: 150, renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.roi} percentValue={params.row.roi_diff} />
-            ),},
-            
-               
-                    { field: "acos", headerName: "ACOS", minWidth: 150,renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.acos} percentValue={params.row.acos_diff}/>
-            ), },
-             
-            {
-            field: "Ads_Volume",
-            headerName: "ADS VOLUME",
+          
+         {
+            field: "Orders",
+            headerName: "ORDERS",
             minWidth: 150,
-           
-           
-        },
+            type: "number", align: "left",
+            headerAlign: "left",
 
-             {
-            field: "ads_metric_ton",
-            headerName: "ADS METRIC TON",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.ads_metric_ton} percentValue={params.row.ads_metric_ton_diff} />
-            ),
-           
         },
          {
-            field: "cpl_ads",
-            headerName: "CPL ADS",
+            field: "ROI",
+            headerName: "ROI",
             minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cpl_ads} percentValue={params.row.cpl_ads_diff} />
-            ),
-           
-        },
-        {
-            field: "overall_sales",
-            headerName: "OVERALL SALES",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.overall_sales} percentValue={params.row.overall_sales_diff} />
-            ),
-           
+            type: "number", align: "left",
+            headerAlign: "left",
+
         },
          {
-            field: "overall_metric_ton",
-            headerName: "OVERALL METRIC TON",
+            field: "CPC",
+            headerName: "CPC",
             minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.overall_metric_ton} percentValue={params.row.overall_metric_ton_diff} />
-            ),
-           
+            type: "number", align: "left",
+            headerAlign: "left",
+
         },
          {
-            field: "overall_cpl",
-            headerName: "OVERALL CPL",
+            field: "CPM",
+            headerName: "CPM",
             minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.overall_cpl} percentValue={params.row.overall_cpl_diff} />
-            ),
-           
+            type: "number", align: "left",
+            headerAlign: "left",
+
         },
+         {
+            field: "CTR",
+            headerName: "CTR",
+            minWidth: 150,
+            type: "number", align: "left",
+            headerAlign: "left",
+
+        },
+         {
+            field: "ROAS",
+            headerName: "ROAS",
+            minWidth: 150,
+            type: "number", align: "left",
+            headerAlign: "left",
+
+        },
+         {
+            field: "ACOS",
+            headerName: "ACOS",
+            minWidth: 150,
+            type: "number", align: "left",
+            headerAlign: "left",
+
+        },
+    
 
       
         

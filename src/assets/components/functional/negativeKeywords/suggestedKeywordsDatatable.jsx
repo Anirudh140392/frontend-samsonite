@@ -44,7 +44,7 @@ const SuggestedKeywordsDatatable = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/Samsonite/suggested-negative-keyword?platform=${operator}&start_date=${startDate}&end_date=${endDate}`;
+            const url = `https://react-api-script.onrender.com/samsonite/negative_keyword?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
             const cacheKey = `cache:GET:${url}`;
 
             // Check cache first
@@ -122,7 +122,7 @@ const SuggestedKeywordsDatatable = () => {
         });
 
        try {
-    const url = `https://react-api-script.onrender.com/Samsonite/add_negative_keyword`;
+    const url = `https://react-api-script.onrender.com/samsonite/add_negative_keyword`;
     const cacheKey = `cache:POST:${url}:${params.toString()}`; // Adjusted for POST caching
     const cached = getCache(cacheKey);
 
@@ -405,16 +405,16 @@ const SuggestedKeywordsDatatable = () => {
 
       const SuggestedKeywordsColumnFlipkart = [
         {
-            field: "keyword",
+            field: "keyword_name",
             headerName: "SEARCH TERM",
-            minWidth: 150,
+            minWidth: 200,
             renderCell: (params) => (
-                <div className="text-icon-div cursor-pointer redirect" onClick={() => handleKeywordClick(params.row.keyword, params.row.campaign_id)}>
-                    <Typography variant="body2">{params.row.keyword}</Typography>
+                <div className="text-icon-div cursor-pointer redirect" onClick={() => handleKeywordClick(params.row.keyword_name, params.row.campaign_id)}>
+                    <Typography variant="body2">{params.row.keyword_name}</Typography>
                 </div>
             ),
         },
-        {
+        /*{
             field: "add_negative",
             headerName: "ADD NEGATIVE",
             minWidth: 150,
@@ -433,82 +433,103 @@ const SuggestedKeywordsDatatable = () => {
                 );
             },
             align: "center"
-        },
+        },*/
         {
-            field: "ad_group_name",
+            field: "ad_group_id",
             headerName: "AD GROUP",
             minWidth: 150,
         },
-        { field: "ad_type", headerName: "AD TYPE", minWidth: 150 },
+        { field: "type", headerName: "TYPE", minWidth: 150 },
+         { field: "match_type", headerName: " MATCH TYPE", minWidth: 150 },
         {
             field: "campaign_name",
             headerName: "CAMPAIGN NAME",
             minWidth: 200,
         },
         {
-            field: "impressions_x",
+            field: "Impressions",
             headerName: "IMPRESSIONS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.impressions_x} percentValue={params.row.impressions_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.impressions} percentValue={params.row.impressions_change} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
+       
         {
-            field: "impressions_diff",
-            headerName: "IMPRESSIONS % CHANGE",
-        },
-        {
-            field: "clicks_x",
+            field: "clicks",
             headerName: "CLICKS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.clicks_x} percentValue={params.row.clicks_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.clicks} percentValue={params.row.clicks_change} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
         {
-            field: "clicks_diff",
-            headerName: "CLICKS % CHANGE",
+            field: "orders",
+            headerName: "ORDERS",
+            minWidth: 150,
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.orders} percentValue={params.row.orders_change} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
         },
+        
         {
-            field: "spend_x",
+            field: "spend",
             headerName: "SPENDS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.spend_x} percentValue={params.row.spend_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.spend} percentValue={params.row.spend_change} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
+        
         {
-            field: "spend_diff",
-            headerName: "SPENDS % CHANGE",
-        },
-        {
-            field: "sales_x",
+            field: "revenue",
             headerName: "SALES",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.sales_x} percentValue={params.row.sales_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.revenue} percentValue={params.row.revenue_change} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
+        
         {
-            field: "sales_diff",
-            headerName: "SALES % CHANGE",
-        },
-        {
-            field: "acos_x",
-            headerName: "ACOS",
+            field: "aov",
+            headerName: "AOV",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.acos_x} percentValue={params.row.acos_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.aov} percentValue={params.row.aov_change} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
-        {
-            field: "acos_diff",
-            headerName: "ACOS % CHANGE",
+         {
+            field: "cpm",
+            headerName: "CPM",
+            minWidth: 150,
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.cpm} percentValue={params.row.cpm_change} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+        },
+         {
+            field: "ctr",
+            headerName: "CTR",
+            minWidth: 150,
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.ctr} percentValue={params.row.ctr_change} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+        },
+         {
+            field: "cpc",
+            headerName: "CPC",
+            minWidth: 150,
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.cpc} percentValue={params.row.cpc_change} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
         },
     ];
 

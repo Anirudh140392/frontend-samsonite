@@ -268,7 +268,7 @@ const CampaignsComponent = () => {
                         gap: 0.5,
                         cursor: "pointer"
                     }}
-                    onClick={() => handleCampaignClick(params.row.campaign_name, params.row.campaign_id)}
+                    onClick={() => handleCampaignClick(params.row.campaign_name, params.row.campaign_ID)}
                     className="redirect"
                 >
                     {params.row.campaign_name}
@@ -276,18 +276,18 @@ const CampaignsComponent = () => {
             ),
         },
         {
-            field: "total_budget",
+            field: "Budget",
             headerName: "BUDGET",
             minWidth: 200,
-            renderCell: (params) => <BudgetCell status={params.row.campaign_status} value={params.row.total_budget} campaignId={params.row.campaign_id} endDate={params.row.end_date || null} platform={operator}
+            renderCell: (params) => <BudgetCell status={params.row.campaign_status} value={params.row.Budget} campaignId={params.row.campaign_ID} endDate={params.row.end_date || null} platform={operator}
                 onUpdate={(campaignId, newBudget) => {
                     console.log("Updating campaign:", campaignId, "New budget:", newBudget);
                     setCampaignsData(prevData => {
                         const updatedData = {
                             ...prevData,
                             data: prevData.data.map(campaign =>
-                                campaign.campaign_id === campaignId
-                                    ? { ...campaign, total_budget: newBudget }
+                                campaign.campaign_ID === campaignId
+                                    ? { ...campaign, Budget: newBudget }
                                     : campaign
                             )
                         };
@@ -298,12 +298,6 @@ const CampaignsComponent = () => {
             headerAlign: "left",
             type: "number", align: "left",
         },
-        {
-            field: "remaining_budget",
-            headerName: "REMAINING BUDGET",
-            minWidth: 155,
-        },
-
          
        
      {
@@ -315,7 +309,7 @@ const CampaignsComponent = () => {
     renderCell: (params) => {
         const status = params.row.campaign_status;
 
-        if (updatingCampaigns[params.row.campaign_id]) {
+        if (updatingCampaigns[params.row.campaign_ID]) {
             return (
                 <Box sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <CircularProgress size={24} />
@@ -347,90 +341,108 @@ const CampaignsComponent = () => {
 },
 
         {
-            field: "campaign_type",
+            field: "Campaign_Type",
             headerName: "CAMPAIGN TYPE",
             minWidth: 155,
         },
        
         {
-            field: "impressions",
+            field: "views_x",
             headerName: "IMPRESSIONS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.impressions} percentValue={params.row.impressions_change} />
+                <ColumnPercentageDataComponent mainValue={params.row.views_x} percentValue={params.row.views_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
        
         {
-            field: "total_clicks",
+            field: "clicks_x",
             headerName: "CLICKS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.total_clicks} percentValue={params.row.total_clicks_change} />
+                <ColumnPercentageDataComponent mainValue={params.row.clicks_x} percentValue={params.row.clicks_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
         {
-            field: "total_spend",
+            field: "ad_spend_x",
             headerName: "SPENDS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.total_spend} percentValue={params.row.total_spend_change} />
+                <ColumnPercentageDataComponent mainValue={params.row.ad_spend_x} percentValue={params.row.ad_spend_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
     
         {
-            field: "total_units_sold",
+            field: "total_units_sold_x",
             headerName: "ORDERS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.total_units_sold} percentValue={params.row.total_units_sold_change} />
+                <ColumnPercentageDataComponent mainValue={params.row.total_units_sold_x} percentValue={params.row.total_units_sold_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
        
         
         {
-            field: "total_revenue",
+            field: "total_revenue_x",
             headerName: "SALES",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.total_revenue} percentValue={params.row.total_revenue_change} />
+                <ColumnPercentageDataComponent mainValue={params.row.total_revenue_x} percentValue={params.row.total_revenue_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
         {
-            field: "avg_ctr",
+            field: "ctr_x",
             headerName: "CTR",
             minWidth: 100,
             renderCell: (params) => (
-                <OnePercentageDataComponent firstValue={params.row.avg_ctr}  />
+                <OnePercentageDataComponent firstValue={params.row.ctr_x}  />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
          {
-            field: "avg_cvr",
+            field: "cvr_x",
             headerName: "CVR",
             minWidth: 100,
             renderCell: (params) => (
-                <OnePercentageDataComponent firstValue={params.row.avg_cvr}  />
+                <OnePercentageDataComponent firstValue={params.row.cvr_x}  />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
         
 {
-  field: "avg_roi",
+  field: "roi_x",
+  headerName: "ROI",
+  minWidth: 150,
+   renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.roi_x} percentValue={params.row.roi_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+  
+},
+{
+  field: "roas_x",
   headerName: "ROAS",
   minWidth: 150,
-  renderCell: (params) => (
-    <ValueFormatter value={params.row.avg_roi} />
-  ),
-  type: "number",
-  align: "left",
-  headerAlign: "left",
-}     ];
+ renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.roas_x} percentValue={params.row.roas_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+},
+{
+  field: "acos_x",
+  headerName: "ACOS",
+  minWidth: 150,
+ renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.acos_x} percentValue={params.row.acos_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+}  
+   ];
 
 
     const CampaignsColumnSwiggy = [
@@ -767,7 +779,7 @@ const CampaignsComponent = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/Samsonite/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
+            const url = `https://react-api-script.onrender.com/samsonite/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);
@@ -834,7 +846,7 @@ const CampaignsComponent = () => {
             const token = localStorage.getItem("accessToken");
             const startDate = formatDate(dateRange[0].startDate);
             const endDate = formatDate(dateRange[0].endDate);
-            const url = `https://react-api-script.onrender.com/Samsonite/campaign_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}`;
+            const url = `https://react-api-script.onrender.com/samsonite/campaign_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}`;
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);
@@ -879,7 +891,7 @@ const CampaignsComponent = () => {
                 campaign_type: campaignType,
                 platform: operator,
             });
-            const response = await fetch(`https://react-api-script.onrender.com/Samsonite/update_campaign_status?${params.toString()}`, {
+            const response = await fetch(`https://react-api-script.onrender.com/samsonite/update_campaign_status?${params.toString()}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

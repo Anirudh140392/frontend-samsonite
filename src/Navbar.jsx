@@ -150,7 +150,7 @@ const Navbar = () => {
                     abortControllerRef.current.abort();
                 }
 
-                if (operatorName !== "Zepto") {
+                if (operatorName !== "Flipkart") {
                     setWalletBalance("N/A");
                     return;
                 }
@@ -189,7 +189,7 @@ const Navbar = () => {
                 }
 
                 // Use operatorName instead of undefined 'operator'
-                const url = `https://react-api-script.onrender.com/Samsonite/wallet-balance?start_date=${startDate}&end_date=${endDate}&platform=${operatorName}`;
+                const url = `https://react-api-script.onrender.com/samsonite/wallet_balance?platform=${operatorName}`;
                 const cacheKey = `cache:GET:${url}`;
 
                 // Check cache first
