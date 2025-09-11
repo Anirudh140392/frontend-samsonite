@@ -56,7 +56,7 @@ const SmartControlDatatable = () => {
     }
 
     try {
-      const response = await fetch(`https://react-api-script.onrender.com/samsonite/show-rule?platform=${operator}`, {
+      const response = await fetch(`https://react-api-script.onrender.com/samsonite/displayrules?platform=${operator}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -252,7 +252,7 @@ const SmartControlDatatable = () => {
     setDeletingRuleId(ruleId);
 
     try {
-      const response = await fetch(`https://react-api-script.onrender.com/samsonite/delete-rule?rule_id=${ruleId}&platform=${"Amazon"}`, {
+      const response = await fetch(`https://react-api-script.onrender.com/samsonite/delete-rule?rule_id=${ruleId}&platform=${operator}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

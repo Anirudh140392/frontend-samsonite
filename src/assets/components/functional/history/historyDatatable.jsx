@@ -56,7 +56,7 @@ const HistoryDatatable = () => {
         { field: "source_name", headerName: "Source Name", minWidth: 150 },
         { field: "campaign_id", headerName: "Campaign ID", minWidth: 150 },
         { field: "campaign_name", headerName: "Campaign Name", minWidth: 250 },
-        { field: "keyword", headerName: "Keyword", minWidth: 150 },
+        { field: "keyword_name", headerName: "Keyword", minWidth: 150 },
         { field: "total_keywords", headerName: "Total Keywords", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
         { field: "updated_keywords", headerName: "Updated Keywords", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
         { field: "platform", headerName: "Platform", minWidth: 150 },
