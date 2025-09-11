@@ -317,17 +317,17 @@ const CampaignsComponent = () => {
             );
         }
 
-        const isLive = status === "LIVE";
-        const isAborted = status === "ABORTED";
+        const isLive = status === "Live";
+        const isAborted = status === "Total Budget Met";
 
          return (
             <Switch
                 checked={isLive}
                 disabled={isAborted}
                 onChange={() => handleToggle(
-                    params.row.campaign_id,
-                    isLive ? "LIVE" : "PAUSED",  // current status, can be used if needed
-                    params.row.brand_id
+                    params.row.campaign_ID,
+                    isLive ? "Live" : "Total Budget Met",  // current status, can be used if needed
+                    params.row.id
                 )}
             />
         );
