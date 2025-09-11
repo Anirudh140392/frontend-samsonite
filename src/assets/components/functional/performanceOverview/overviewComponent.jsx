@@ -181,7 +181,7 @@ const OverviewComponent = () => {
      const CategoryColumnsFlipkart = [
         {
             field: "Campaign_Tags",
-            headerName: "CAMPAIGN",
+            headerName: "CAMPAIGN TAGS",
             minWidth: 200,
            
         },
@@ -574,7 +574,7 @@ const OverviewComponent = () => {
                             <div className="px-3 py-2 border-bottom">
                                 <div className="row">
                                     <div className="col-lg-6">
-                                        <h5 className="mb-0">Category View</h5>
+                                        <h5 className="mb-0">Campaign Tag View</h5>
                                     </div>
                                 </div>
                                 <div>
@@ -594,7 +594,7 @@ const OverviewComponent = () => {
                 <div className="px-3 py-2 border-bottom">
                     <div className="row">
                         <div className="col-lg-6">
-                            <h5 className="mb-0">Subcategory View</h5>
+                            <h5 className="mb-0">Subcampaign Tag View</h5>
                         </div>
                     </div>
                     <div>
