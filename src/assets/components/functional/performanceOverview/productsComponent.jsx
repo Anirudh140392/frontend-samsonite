@@ -395,6 +395,11 @@ const ProductsComponent = () => {
             field: "views",
             headerName: "IMPRESSIONS",
             minWidth: 150,
+             renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.views} percentValue={params.row.views_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+            
            
         },
         
@@ -404,45 +409,69 @@ const ProductsComponent = () => {
             field: "ad_spend",
             headerName: "SPEND",
             minWidth: 150,
+             renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.ad_spend} percentValue={params.row.ad_spend_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
            
         },
          {
             field: "cvr",
             headerName: "CVR",
             minWidth: 150,
+             renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.cvr} percentValue={params.row.cvr_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
            
         },
-         {
+       
+           {
             field: "direct_units_sold",
             headerName: "DIRECT ORDERS",
             minWidth: 150,
-           
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.direct_units_sold} percentValue={params.row.direct_units_sold_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
         },
-        {
+      {
             field: "indirect_units_sold",
             headerName: "INDIRECT ORDERS",
             minWidth: 150,
-           
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.indirect_units_sold} percentValue={params.row.indirect_units_sold_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
         },
-         {
+        {
             field: "direct_revenue",
             headerName: "DIRECT REVENUE",
             minWidth: 150,
-           
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.direct_revenue} percentValue={params.row.direct_revenue_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
         },
-         {
+         
+        {
             field: "indirect_revenue",
             headerName: "INDIRECT REVENUE",
             minWidth: 150,
-           
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.indirect_revenue} percentValue={params.row.indirect_revenue_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
         },
-         {
-            field: "roi",
-            headerName: "ROI",
+        {
+            field: "roi_direct",
+            headerName: "DIRECT ROI",
             minWidth: 150,
-           
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.roi_direct} percentValue={params.row.roi_direct_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
         },
-        
 
 
          

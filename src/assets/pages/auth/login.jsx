@@ -41,7 +41,7 @@ const Login = () => {
             // Persist immediately so Navbar fallback can read it on first render
             localStorage.setItem("username", name);
             localStorage.setItem("accessToken", access);
-            navigate("/?operator=Zepto");
+            navigate("/?operator=Flipkart");
         } catch (error) {
             handleSnackbarOpen("Failed to login.", "error");
         } finally {

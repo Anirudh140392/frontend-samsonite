@@ -81,9 +81,7 @@ const CampaignsComponent = () => {
                         const updatedData = {
                             ...prevData,
                             data: prevData.data.map(campaign =>
-                                campaign.campaign_id === campaignId &&
-                                    campaign.campaign_name === campaignName &&
-                                    campaign.campaign_type === campaignType
+                                campaign.campaign_id === campaignId
                                     ? { ...campaign, budget_inr_x: newBudget }
                                     : campaign
                             ),
@@ -279,7 +277,7 @@ const CampaignsComponent = () => {
             field: "Budget",
             headerName: "BUDGET",
             minWidth: 200,
-            renderCell: (params) => <BudgetCell status={params.row.campaign_status} value={params.row.Budget} campaignId={params.row.campaign_ID} endDate={params.row.end_date || null} platform={operator}
+            renderCell: (params) => <BudgetCell status={params.row.campaign_status} value={params.row.Budget} campaignId={params.row.Campaign_ID} endDate={params.row.end_date || null} platform={operator}
                 onUpdate={(campaignId, newBudget) => {
                     console.log("Updating campaign:", campaignId, "New budget:", newBudget);
                     setCampaignsData(prevData => {
@@ -628,14 +626,14 @@ const CampaignsComponent = () => {
             field: "daily_budget",
             headerName: "BUDGET",
             minWidth: 200,
-            renderCell: (params) => <BudgetCell value={params.row.daily_budget} campaignId={params.row.campaign_id} endDate={params.row.end_date || null} platform={operator}
+            renderCell: (params) => <BudgetCell value={params.row.daily_budget} campaignId={params.row.Campaign_ID} endDate={params.row.end_date || null} platform={operator}
                 onUpdate={(campaignId, newBudget) => {
                     console.log("Updating campaign:", campaignId, "New budget:", newBudget);
                     setCampaignsData(prevData => {
                         const updatedData = {
                             ...prevData,
                             data: prevData.data.map(campaign =>
-                                campaign.campaign_id === campaignId
+                                campaign.Campaign_ID === campaignId
                                     ? { ...campaign, daily_budget: newBudget }
                                     : campaign
                             )
@@ -834,9 +832,10 @@ const CampaignsComponent = () => {
     // Removed per-page brand fetch to avoid duplicate calls; provider handles it
 
     const columns = useMemo(() => {
-       
+        if (operator === "Amazon") return CampaignsColumnAmazon;
         if (operator === "Zepto") return CampaignsColumnZepto;
         if (operator === "Flipkart") return CampaignsColumnFlipkart;
+        if (operator === "Swiggy") return CampaignsColumnSwiggy;
        
         return [];
     }, [operator, brands, updatingCampaigns]);

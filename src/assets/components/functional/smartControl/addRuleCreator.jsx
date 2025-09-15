@@ -10,6 +10,7 @@ const AddRuleCreator = (props) => {
 
     const [ruleData, setRuleData] = useState({});
     const [showFilters, setShowFilters] = useState(false);
+    
     useEffect(() => {
         if (editRuleData) {
             setRuleData(editRuleData);
@@ -58,6 +59,9 @@ const normalizeFilters = (filters) => {
             operation_type: ruleData.operation_type || "",
             description: ruleData.description || "",
             limit_value: ruleData.limit_value || "",
+            rule_type: ruleData.rule_type || "",
+            program_type: ruleData.program_type || "",
+            extension_date: ruleData.extension_date || "",
             spends: extractFilterValue(ruleData.filters, "spends"),
             sales: extractFilterValue(ruleData.filters, "sales"),
             roas: extractFilterValue(ruleData.filters, "roas"),
@@ -247,30 +251,82 @@ const normalizeFilters = (filters) => {
                 onChange={(e) => setRuleData({ ...ruleData, rule_name: e.target.value })}
             />
 
-            <Box display="flex" alignItems="center" gap={2} mt={2}>
-                <FormControl sx={{ width: "45%" }}>
-                    <InputLabel>Actions</InputLabel>
-                    <Select
-                        label="Actions"
-                        value={ruleData?.operation_name || ""}
+           
+
+              <TextField
+                fullWidth
+                label="Program Type"
+                value={ruleData?.campaign_type || ""}
+                margin="normal"
+                onChange={(e) => setRuleData({ ...ruleData, campaign_type: e.target.value })}
+            />
+
+            {/* Type Field */}
+            <FormControl fullWidth margin="normal">
+                <InputLabel>Type</InputLabel>
+                <Select
+                    label="Type"
+                    value={ruleData?.rule_type || ""}
+                    onChange={(e) => {
+                        const newType = e.target.value;
+                        setRuleData(prevData => ({
+                            ...prevData,
+                            rule_type: newType,
+                            // Reset related fields when type changes
+                            operation_name: "",
+                            operation_type: "",
+                            extension_date: ""
+                        }));
+                    }}
+                >
+                    <MenuItem value="Bid">Bid</MenuItem>
+                    <MenuItem value="Date Extension">Date Extension</MenuItem>
+                </Select>
+            </FormControl>
+
+            {/* Conditional rendering based on Type */}
+            {ruleData?.rule_type === "Bid" && (
+                <Box display="flex" alignItems="center" gap={2} mt={2}>
+                    <FormControl sx={{ width: "45%" }}>
+                        <InputLabel>Actions</InputLabel>
+                        <Select
+                            label="Actions"
+                            value={ruleData?.operation_name || ""}
+                            onChange={(e) =>
+                                setRuleData({ ...ruleData, operation_name: e.target.value })
+                            }
+                        >
+                            <MenuItem value="In">Increase Bid %</MenuItem>
+                            <MenuItem value="De">Decrease Bid %</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <Typography>by</Typography>
+                    <TextField
+                        type="number"
+                        value={ruleData.operation_type || ""}
+                        sx={{ width: "45%" }}
                         onChange={(e) =>
-                            setRuleData({ ...ruleData, operation_name: e.target.value })
+                            setRuleData({ ...ruleData, operation_type: e.target.value })
                         }
-                    >
-                        <MenuItem value="In">Increase Bid %</MenuItem>
-                        <MenuItem value="De">Decrease Bid %</MenuItem>
-                    </Select>
-                </FormControl>
-                <Typography>by</Typography>
+                    />
+                </Box>
+            )}
+
+            {ruleData?.rule_type === "Date Extension" && (
                 <TextField
-                    type="number"
-                    value={ruleData.operation_type || ""}
-                    sx={{ width: "45%" }}
+                    fullWidth
+                    label="Extension Date"
+                    type="date"
+                    value={ruleData?.extension_date || ""}
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
                     onChange={(e) =>
-                        setRuleData({ ...ruleData, operation_type: e.target.value })
+                        setRuleData({ ...ruleData, extension_date: e.target.value })
                     }
                 />
-            </Box>
+            )}
 
             <TextField
                 fullWidth
