@@ -5,17 +5,32 @@ import { Check } from "@mui/icons-material";
 const BudgetCell = ({
   value,
   campaignId,
+  platform,
   onUpdate,
   onSnackbarOpen,
 }) => {
   const [budget, setBudget] = useState(value);
   const [isUpdating, setIsUpdating] = useState(false);
+  const originalBudget = value; // Store the original budget value
 
   const handleBudgetChange = (e) => {
     setBudget(Number(e.target.value));
   };
 
   const handleUpdate = async () => {
+    // Check if budget is being decreased
+    if (budget < originalBudget) {
+      onSnackbarOpen("Budget cannot be decreased!", "error");
+      setBudget(originalBudget); // Reset to original value
+      return;
+    }
+
+    // Check if budget is the same as original
+    if (budget === originalBudget) {
+      onSnackbarOpen("No changes made to budget!", "info");
+      return;
+    }
+
     try {
       const token = localStorage.getItem("accessToken");
       if (!token) throw new Error("No access token found");
@@ -27,7 +42,7 @@ const BudgetCell = ({
       };
 
       const response = await fetch(
-        `https://react-api-script.onrender.com/samsonite/budget-change?platform=Flipkart`,
+        `https://react-api-script.onrender.com/samsonite/budget-change?platform=${platform}`,
         {
           method: "PUT",
           headers: {
@@ -40,9 +55,6 @@ const BudgetCell = ({
 
       if (!response.ok) throw new Error("Failed to update budget");
 
-      // You can check payload here in the console if needed:
-      // console.log("Sent payload:", payload);
-
       const updatedData = await response.json();
       onUpdate(campaignId, budget);
 
@@ -50,6 +62,7 @@ const BudgetCell = ({
     } catch (error) {
       console.error("Error updating budget:", error);
       onSnackbarOpen("Failed to update budget!", "error");
+      setBudget(originalBudget); // Reset to original value on error
     } finally {
       setIsUpdating(false);
     }
@@ -65,6 +78,7 @@ const BudgetCell = ({
         onChange={handleBudgetChange}
         sx={{ width: "140px" }}
         disabled={isUpdating}
+        inputProps={{ min: originalBudget }} // Set minimum value to original budget
       />
       <IconButton color="primary" onClick={handleUpdate} disabled={isUpdating}>
         {isUpdating ? <CircularProgress size={24} /> : <Check />}

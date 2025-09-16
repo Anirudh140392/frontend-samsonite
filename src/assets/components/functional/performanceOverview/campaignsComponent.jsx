@@ -266,7 +266,7 @@ const CampaignsComponent = () => {
                         gap: 0.5,
                         cursor: "pointer"
                     }}
-                    onClick={() => handleCampaignClick(params.row.campaign_name, params.row.campaign_ID)}
+                    onClick={() => handleCampaignClick(params.row.campaign_name, params.row.campaign_id)}
                     className="redirect"
                 >
                     {params.row.campaign_name}
@@ -277,14 +277,14 @@ const CampaignsComponent = () => {
             field: "Budget",
             headerName: "BUDGET",
             minWidth: 200,
-            renderCell: (params) => <BudgetCell status={params.row.campaign_status} value={params.row.Budget} campaignId={params.row.Campaign_ID} endDate={params.row.end_date || null} platform={operator}
+            renderCell: (params) => <BudgetCell status={params.row.campaign_status} value={params.row.Budget} campaignId={params.row.campaign_id} endDate={params.row.end_date || null} platform={operator}
                 onUpdate={(campaignId, newBudget) => {
                     console.log("Updating campaign:", campaignId, "New budget:", newBudget);
                     setCampaignsData(prevData => {
                         const updatedData = {
                             ...prevData,
                             data: prevData.data.map(campaign =>
-                                campaign.campaign_ID === campaignId
+                                campaign.campaign_id === campaignId
                                     ? { ...campaign, Budget: newBudget }
                                     : campaign
                             )
@@ -307,7 +307,7 @@ const CampaignsComponent = () => {
     renderCell: (params) => {
         const status = params.row.campaign_status;
 
-        if (updatingCampaigns[params.row.campaign_ID]) {
+        if (updatingCampaigns[params.row.campaign_id]) {
             return (
                 <Box sx={{ height: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}>
                     <CircularProgress size={24} />
@@ -315,16 +315,16 @@ const CampaignsComponent = () => {
             );
         }
 
-        const isLive = status === "Live";
-        const isAborted = status === "Total Budget Met";
+        const isLive = status === "LIVE";
+        const isAborted = status === "ABORTED";
 
          return (
             <Switch
                 checked={isLive}
                 disabled={isAborted}
                 onChange={() => handleToggle(
-                    params.row.campaign_ID,
-                    isLive ? "Live" : "Total Budget Met",  // current status, can be used if needed
+                    params.row.campaign_id,
+                    isLive ? "LIVE" : "ABORTED",  // current status, can be used if needed
                     params.row.id
                 )}
             />
@@ -339,107 +339,119 @@ const CampaignsComponent = () => {
 },
 
         {
-            field: "Campaign_Type",
+            field: "ad_type",
             headerName: "CAMPAIGN TYPE",
             minWidth: 155,
         },
        
         {
-            field: "views_x",
+            field: "views_y",
             headerName: "IMPRESSIONS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.views_x} percentValue={params.row.views_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.views_y} percentValue={params.row.views_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
        
         {
-            field: "clicks_x",
+            field: "clicks_y",
             headerName: "CLICKS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.clicks_x} percentValue={params.row.clicks_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.clicks_y} percentValue={params.row.clicks_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
         {
-            field: "ad_spend_x",
+            field: "cost_y",
             headerName: "SPENDS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.ad_spend_x} percentValue={params.row.ad_spend_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.cost_y} percentValue={params.row.cost_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
     
         {
-            field: "total_units_sold_x",
+            field: "total_converted_units_y",
             headerName: "ORDERS",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.total_units_sold_x} percentValue={params.row.total_units_sold_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.total_converted_units_y} percentValue={params.row.total_converted_units_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
        
         
         {
-            field: "total_revenue_x",
+            field: "total_converted_revenue_y",
             headerName: "SALES",
             minWidth: 150,
             renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.total_revenue_x} percentValue={params.row.total_revenue_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "ctr_x",
-            headerName: "CTR",
-            minWidth: 100,
-            renderCell: (params) => (
-                <OnePercentageDataComponent firstValue={params.row.ctr_x}  />
+                <ColumnPercentageDataComponent mainValue={params.row.total_converted_revenue_y} percentValue={params.row.total_converted_revenue_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
          {
-            field: "cvr_x",
-            headerName: "CVR",
-            minWidth: 100,
+            field: "ctr_y",
+            headerName: "CTR",
+            minWidth: 150,
             renderCell: (params) => (
-                <OnePercentageDataComponent firstValue={params.row.cvr_x}  />
+                <ColumnPercentageDataComponent mainValue={params.row.ctr_y} percentValue={params.row.ctr_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
         },
         
+         {
+            field: "cvr",
+            headerName: "CVR",
+            minWidth: 150,
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.cvr} percentValue={params.row.cvr_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+        },
+        {
+            field: "cpc",
+            headerName: "CPC",
+            minWidth: 150,
+            renderCell: (params) => (
+                <ColumnPercentageDataComponent mainValue={params.row.cpc} percentValue={params.row.cpc_diff} />
+            ), type: "number", align: "left",
+            headerAlign: "left",
+        },
+        
+        
 {
-  field: "roi_x",
+  field: "roi_y",
   headerName: "ROI",
   minWidth: 150,
    renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.roi_x} percentValue={params.row.roi_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.roi_y} percentValue={params.row.roi_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
   
 },
+
 {
-  field: "roas_x",
-  headerName: "ROAS",
+  field: "acos",
+  headerName: "ACOS",
   minWidth: 150,
  renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.roas_x} percentValue={params.row.roas_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.acos} percentValue={params.row.acos_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
 },
 {
-  field: "acos_x",
-  headerName: "ACOS",
+  field: "aov",
+  headerName: "AOV",
   minWidth: 150,
  renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.acos_x} percentValue={params.row.acos_diff} />
+                <ColumnPercentageDataComponent mainValue={params.row.aov} percentValue={params.row.aov_diff} />
             ), type: "number", align: "left",
             headerAlign: "left",
-}  
+}   
    ];
 
 
