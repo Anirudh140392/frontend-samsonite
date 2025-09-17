@@ -41,15 +41,26 @@ const PerformanceOverviewComponent = () => {
     }
   }, [location.search]);
 
+  const campaignsRef = React.useRef(null);
+
   return (
     <React.Fragment>
       <div className="container">
         <div className="card">
           <div className="card-body">
-            <div className="border-bottom py-1 position-relative d-flex justify-content-between">
+            <div className="border-bottom py-1 position-relative d-flex justify-content-between align-items-center">
               <small className="d-inline-block py-1 px-2 bg-light rounded-pill">
                 Report Date = Last {daysDifference()} Days
               </small>
+              {showActiveTab === PERFORMANCETABS.CAMPAIGNS && (
+                <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => campaignsRef.current?.refresh?.()}
+                >
+                  Refresh
+                </Button>
+              )}
               {/*<Button
                 style={{ marginLeft: "10px", fontSize: "10px" }}
                 onClick={() => campaignSetter("")}
@@ -74,7 +85,7 @@ const PerformanceOverviewComponent = () => {
             )}
             {showActiveTab === PERFORMANCETABS.CAMPAIGNS && (
               <ErrorBoundary>
-                <CampaignsComponent />
+                <CampaignsComponent ref={campaignsRef} />
               </ErrorBoundary>
             )}
             {showActiveTab === PERFORMANCETABS.ADGROUPS && (

@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useMemo, useRef } from "react";
+import React, { useContext, useState, useEffect, useMemo, useRef, useImperativeHandle, forwardRef } from "react";
 import MuiDataTableComponent from "../../common/muidatatableComponent";
 import '../../../styles/campaignsComponent/campaignsComponent.less';
 import overviewContext from "../../../../store/overview/overviewContext";
@@ -14,7 +14,7 @@ import { getCache, setCache } from "../../../../services/cacheUtils";
 import OnePercentageDataComponent from "../../common/onePercentageComponent";
 import ValueFormatter from "../../common/valueFormatter";
 
-const CampaignsComponent = () => {
+const CampaignsComponent = (props, ref) => {
 
     const dataContext = useContext(overviewContext)
     const { dateRange, brands, getBrandsData, formatDate } = dataContext
@@ -839,6 +839,10 @@ const CampaignsComponent = () => {
         getCampaignsData(true);
     };
 
+    useImperativeHandle(ref, () => ({
+        refresh: handleRefresh
+    }));
+
     const abortControllerRef = useRef(null);
 
     useEffect(() => {
@@ -962,11 +966,7 @@ const CampaignsComponent = () => {
                 setShowTrendsModal={setShowTrendsModal} />
             <div className="shadow-box-con-campaigns aggregated-view-con">
                 <div className="datatable-con-campaigns">
-                    <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
-                        <Button variant="outlined" size="small" onClick={handleRefresh} disabled={isLoading}>
-                            Refresh
-                        </Button>
-                    </Box>
+                  
                     <MuiDataTableComponent
                         isLoading={isLoading}
                         isExport={true}
@@ -984,4 +984,4 @@ const CampaignsComponent = () => {
     )
 }
 
-export default CampaignsComponent;
+export default forwardRef(CampaignsComponent);
