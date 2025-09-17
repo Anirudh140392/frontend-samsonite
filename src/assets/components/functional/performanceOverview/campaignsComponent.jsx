@@ -10,7 +10,7 @@ import TrendsModal from "./modal/trendsModal";
 import BudgetCell from "./overview/budgetCell";
 import NewPercentageDataComponent from "../../common/newPercentageDataComponent";
 import { cachedFetch } from "../../../../services/cachedFetch";
-import { getCache } from "../../../../services/cacheUtils";
+import { getCache, setCache } from "../../../../services/cacheUtils";
 import OnePercentageDataComponent from "../../common/onePercentageComponent";
 import ValueFormatter from "../../common/valueFormatter";
 
@@ -765,7 +765,7 @@ const CampaignsComponent = () => {
 
 
 
-    const getCampaignsData = async () => {
+    const getCampaignsData = async (forceRefresh = false) => {
         if (!operator) return;
 
         if (abortControllerRef.current) {
@@ -789,14 +789,19 @@ const CampaignsComponent = () => {
         const endDate = formatDate(dateRange[0].endDate);
 
         try {
-            const url = `https://react-api-script.onrender.com/samsonite/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}`;
+            const ts = forceRefresh ? `&_=${Date.now()}` : "";
+            const url = `https://react-api-script.onrender.com/samsonite/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}${ts}`;
             const cacheKey = `cache:GET:${url}`;
 
-            const cached = getCache(cacheKey);
-            if (cached) {
-                setCampaignsData(cached);
-                setIsLoading(false);
-                return;
+            if (forceRefresh) {
+                try { localStorage.removeItem(cacheKey); } catch (_) {}
+            } else {
+                const cached = getCache(cacheKey);
+                if (cached) {
+                    setCampaignsData(cached);
+                    setIsLoading(false);
+                    return;
+                }
             }
 
             const response = await cachedFetch(url, {
@@ -806,7 +811,7 @@ const CampaignsComponent = () => {
                     Authorization: `Bearer ${token}`,
                 },
                 signal: controller.signal,
-            }, { ttlMs: 5 * 60 * 1000, cacheKey });
+            }, { ttlMs: 5 * 60 * 1000, cacheKey, bypassCache: forceRefresh });
 
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} ${response.statusText}`);
@@ -814,6 +819,9 @@ const CampaignsComponent = () => {
 
             const data = await response.json();
             setCampaignsData(data);
+            if (forceRefresh) {
+                try { setCache(cacheKey, data, 5 * 60 * 1000); } catch (_) {}
+            }
         } catch (error) {
             if (error.name === "AbortError") {
                 console.log("Previous request aborted due to operator change.");
@@ -824,6 +832,11 @@ const CampaignsComponent = () => {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleRefresh = async () => {
+        console.log("Refresh clicked: forcing network fetch");
+        getCampaignsData(true);
     };
 
     const abortControllerRef = useRef(null);
@@ -949,6 +962,11 @@ const CampaignsComponent = () => {
                 setShowTrendsModal={setShowTrendsModal} />
             <div className="shadow-box-con-campaigns aggregated-view-con">
                 <div className="datatable-con-campaigns">
+                    <Box sx={{ display: "flex", justifyContent: "flex-end", mb: 1 }}>
+                        <Button variant="outlined" size="small" onClick={handleRefresh} disabled={isLoading}>
+                            Refresh
+                        </Button>
+                    </Box>
                     <MuiDataTableComponent
                         isLoading={isLoading}
                         isExport={true}
