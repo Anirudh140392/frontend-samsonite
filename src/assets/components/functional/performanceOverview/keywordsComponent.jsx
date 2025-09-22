@@ -341,148 +341,7 @@ const KeywordsComponent = () => {
             align: "left",
             headerAlign: "left",
         },
-        /*{
-            field: "views",
-            headerName: "IMPRESSIONS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.views} percentValue={params.row.views_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "views_diff",
-            headerName: "IMPRESSIONS % CHANGE",
-            hideable: false
-        },
-        {
-            field: "clicks",
-            headerName: "CLICKS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.clicks} percentValue={params.row.clicks_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "clicks_diff",
-            headerName: "CLICKS % CHANGE",
-            hideable: false
-        },
-        {
-            field: "cpc",
-            headerName: "CPC",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cpc} percentValue={params.row.cpc_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "cpc_diff",
-            headerName: "CPC % CHANGE",
-            hideable: false
-        },
-        {
-            field: "direct_orders",
-            headerName: "DIRECT ORDERS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.direct_orders} percentValue={params.row.direct_orders_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "direct_orders_diff",
-            headerName: "DIRECT ORDERS % CHANGE",
-            hideable: false
-        },
-        {
-            field: "indirect_orders",
-            headerName: "INDIRECT ORDERS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.indirect_orders} percentValue={params.row.indirect_orders_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "indirect_orders_diff",
-            headerName: "INDIRECT ORDERS % CHANGE",
-            hideable: false
-        },
-        {
-            field: "indirect_sales",
-            headerName: "INDIRECT SALES",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.indirect_sales} percentValue={params.row.indirect_sales_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "indirect_sales_diff",
-            headerName: "INDIRECT SALES % CHANGE",
-            hideable: false
-        },
-        {
-            field: "acos",
-            headerName: "ACOS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.acos} percentValue={params.row.acos_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "acos_diff",
-            headerName: "ACOS % CHANGE",
-            hideable: false
-        },
-        {
-            field: "roi_direct",
-            headerName: "DIRECT ROAS",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.roi_direct} percentValue={params.row.roi_direct_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "roi_direct_diff",
-            headerName: "DIRECT ROAS % CHANGE",
-            hideable: false
-        },
-        {
-            field: "cvr",
-            headerName: "CVR",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.cvr} percentValue={params.row.cvr_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-
-        {
-            field: "cvr_diff",
-            headerName: "CVR % CHANGE",
-            hideable: false
-        },
-        {
-            field: "aov",
-            headerName: "AOV",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.aov} percentValue={params.row.aov_diff} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },
-        {
-            field: "aov_diff",
-            headerName: "AOV % CHANGE",
-            hideable: false
-        },
-        { field: "ad_type", headerName: "AD TYPE", minWidth: 150, },*/
+      
     ];
 
     const KeywordsColumnZepto = [
@@ -613,15 +472,7 @@ const KeywordsComponent = () => {
             headerAlign: "left",
         },
 
-        /*{
-            field: "direct_sales",
-            headerName: "DIRECT SALES",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.direct_sales} percentValue={params.row.direct_sales_change} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },*/
+      
 
         {
             field: "roas",
@@ -633,21 +484,7 @@ const KeywordsComponent = () => {
             headerAlign: "left",
         },
 
-        /*{
-            field: "atc",
-            headerName: "ATC",
-            minWidth: 150,
-            renderCell: (params) => (
-                <ColumnPercentageDataComponent mainValue={params.row.atc} percentValue={params.row.atc_change} />
-            ), type: "number", align: "left",
-            headerAlign: "left",
-        },*/
-
-
        
-        /*{
-            field: "ad_type", headerName: "AD TYPE", minWidth: 150,
-        },*/
         {
             field: "campaign_name",
             headerName: "CAMPAIGN",
