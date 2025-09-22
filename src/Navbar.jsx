@@ -409,7 +409,7 @@ const Navbar = () => {
                                         }
                                     />
                                 )}
-                                {!["Amazon","Swiggy","Flipkart"].includes(operatorName) && (
+                                {!["Amazon","Swiggy"].includes(operatorName) && (
                                     <RedirectLink
                                         url={`/negative-keywords${operatorTypeParams === ""
                                             ? `?operator=${OPERATOR.AMAZON}`
