@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, TextField, IconButton, CircularProgress } from "@mui/material";
 import { Check } from "@mui/icons-material";
 
-const BidCell = ({ value, campaignId, onUpdate, targetId, campaignType, adGroupId, keywordId, onSnackbarOpen, platform }) => {
+const BidCell = ({ value, campaignId, platform, keyword, onUpdate, onSnackbarOpen }) => {
     const [bid, setBid] = useState(value);
     const [isUpdating, setIsUpdating] = useState(false)
 
@@ -10,32 +10,47 @@ const BidCell = ({ value, campaignId, onUpdate, targetId, campaignType, adGroupI
         setBid(e.target.value);
     };
 
+    const type_mapping = {
+        'Home Page': 'HOME_PAGE',
+        'Top of Search Listings Page': 'SEARCH_PAGE_TOP_SLOT',
+        'Rest of Search Listings Page': 'SEARCH_PAGE',
+        'Top of Browse Listings Page': 'BROWSE_PAGE_TOP_SLOT',
+        'Rest of Browse Listings Page': 'BROWSE_PAGE',
+        'Product Page': 'PRODUCT_PAGE'
+    };
+
+    function getMappingValue(key) {
+        if (type_mapping.hasOwnProperty(key)) {
+            return type_mapping[key];
+        } else {
+            return 'Key not found';
+        }
+    }
+
+
     const handleUpdate = async () => {
         try {
             const token = localStorage.getItem("accessToken");
             if (!token) throw new Error("No access token found");
             setIsUpdating(true)
-            const params = new URLSearchParams({
-                platform: platform,
-                campaign_id: campaignId,
-                target_id: targetId,
-                campaign_type: campaignType,
-                ad_group_id: adGroupId,
-                keyword_id: keywordId,
-                bid: bid
-            });
-            const response = await fetch(`https://react-api-script.onrender.com/bowlers/update_bid?${params.toString()}`, {
+            const response = await fetch("https://react-api-script.onrender.com/samsonite/bid-change", {
                 method: "PUT",
                 headers: {
                     Authorization: `Bearer ${token}`,
                     "Content-Type": "application/json",
                 },
+                body: JSON.stringify({
+                    platform: platform,
+                    campaign_id: campaignId.toString(),
+                    bid: Number(bid),
+                    keyword: getMappingValue(keyword),
+                }),
             });
 
             if (!response.ok) throw new Error("Failed to update bid");
 
             const updatedData = await response.json();
-            onUpdate(campaignId, targetId, campaignType, adGroupId, keywordId, bid);
+            onUpdate(campaignId, updatedData.keyword, updatedData.bid, updatedData.match_type);
 
             onSnackbarOpen("Bid updated successfully!", "success");
         } catch (error) {

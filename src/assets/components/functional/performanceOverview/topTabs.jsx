@@ -52,6 +52,14 @@ const TopTabs = (props) => {
                             setShowActiveTab={setShowActiveTab}
                             setValue={PERFORMANCETABS.ADGROUPS} />
                     }
+                   {['Flipkart'].includes(operatorName) &&
+                        <TabList
+                            isShowCount={true}
+                            tabText="Placements"
+                            showActiveTab={showActiveTab}
+                            setShowActiveTab={setShowActiveTab}
+                            setValue={PERFORMANCETABS.PLACEMENTS} />
+                    }
                     {['Flipkart','Amazon','Zepto','Swiggy','BigBasket'].includes(operatorName) &&
                         <TabList
                             isShowCount={true}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import TopTabs from "../../components/functional/performanceOverview/topTabs";
 import "../../styles/performanceOverview/performanceOverview.less";
 import { PERFORMANCETABS } from "../../lib/constant";
@@ -6,15 +6,17 @@ import OverviewComponent from "../../components/functional/performanceOverview/o
 import PortfoliosComponent from "../../components/functional/performanceOverview/portfoliosComponent";
 import CampaignsComponent from "../../components/functional/performanceOverview/campaignsComponent";
 import AdGroupsComponent from "../../components/functional/performanceOverview/adGroupsComponent";
+import PlacementsComponent from "../../components/functional/performanceOverview/placementComponent";
 import KeywordsComponent from "../../components/functional/performanceOverview/keywordsComponent";
 import ProductsComponent from "../../components/functional/performanceOverview/productsComponent";
 import ErrorBoundary from "../../components/common/erroBoundryComponent";
-import { useLocation } from "react-router";
+import { useLocation, useSearchParams } from "react-router";
 import { Button } from "@mui/material";
 import overviewContext from "../../../store/overview/overviewContext";
 
 const PerformanceOverviewComponent = () => {
   const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [showActiveTab, setShowActiveTab] = useState(PERFORMANCETABS.OVERVIEW);
   const [operatorName, setoperatorName] = useState("");
   const { dateRange, campaignSetter } = useContext(overviewContext) || {
@@ -40,6 +42,17 @@ const PerformanceOverviewComponent = () => {
       setShowActiveTab(PERFORMANCETABS[tab.toUpperCase()]);
     }
   }, [location.search]);
+
+  // Keep URL query param 'tab' in sync with the active tab
+  useEffect(() => {
+    const lowercaseTab = (showActiveTab || "").toLowerCase();
+    const params = new URLSearchParams(location.search);
+    if (lowercaseTab) {
+      params.set("tab", lowercaseTab);
+    }
+    setSearchParams(params);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showActiveTab]);
 
   const campaignsRef = React.useRef(null);
 
@@ -91,6 +104,11 @@ const PerformanceOverviewComponent = () => {
             {showActiveTab === PERFORMANCETABS.ADGROUPS && (
               <ErrorBoundary>
                 <AdGroupsComponent />
+              </ErrorBoundary>
+            )}
+            {showActiveTab === PERFORMANCETABS.PLACEMENTS && (
+              <ErrorBoundary>
+                <PlacementsComponent />
               </ErrorBoundary>
             )}
             {showActiveTab === PERFORMANCETABS.KEYWORDS && (
