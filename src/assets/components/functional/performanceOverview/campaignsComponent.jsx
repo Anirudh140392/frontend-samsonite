@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useMemo, useRef, useImperativeH
 import MuiDataTableComponent from "../../common/muidatatableComponent";
 import '../../../styles/campaignsComponent/campaignsComponent.less';
 import overviewContext from "../../../../store/overview/overviewContext";
-import { Switch, Box, Button, Snackbar, Alert } from "@mui/material";
+import { Switch, Box, Button, Snackbar, Alert, FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { Dialog, DialogActions, DialogContent, DialogTitle, CircularProgress } from "@mui/material";
 import { useSearchParams } from "react-router";
 import ColumnPercentageDataComponent from "../../common/columnPercentageDataComponent";
@@ -31,13 +31,40 @@ const CampaignsComponent = (props, ref) => {
     });
     const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "success" });
 
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
     const operator = searchParams.get("operator");
+    const selectedBrand = searchParams.get("brand") || "Cinthol Grocery";
+
+    // Add ref to handle abort controller for API calls
+    const abortControllerRef = useRef(null);
+    
+    // Track if data was mutated (budget/status changed) to force refresh on next component mount
+    const dataMutated = useRef(false);
+    
+    // Track if component is currently visible/mounted
+    const isComponentActive = useRef(true);
 
     const STATUS_OPTIONS = [
         { value: 1, label: 'Active' },
         { value: 0, label: 'Paused' }
     ]
+
+    // Utility function to clear all campaign-related caches
+    const clearCampaignCaches = () => {
+        try {
+            const keysToRemove = [];
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.includes('/samsonite/campaign')) {
+                    keysToRemove.push(key);
+                }
+            }
+            keysToRemove.forEach(key => localStorage.removeItem(key));
+            console.log(`Cleared ${keysToRemove.length} campaign cache entries`);
+        } catch (error) {
+            console.error("Error clearing campaign caches:", error);
+        }
+    };
 
     const CampaignsColumnFlipkart = [
         {
@@ -63,9 +90,21 @@ const CampaignsComponent = (props, ref) => {
             field: "Budget",
             headerName: "BUDGET",
             minWidth: 200,
-            renderCell: (params) => <BudgetCell status={params.row.campaign_status} value={params.row.Budget} campaignId={params.row.campaign_id} endDate={params.row.end_date || null} platform={operator}
+            renderCell: (params) => <BudgetCell 
+                status={params.row.campaign_status} 
+                value={params.row.Budget} 
+                campaignId={params.row.campaign_id} 
+                adType={params.row.ad_type}
+                brand={params.row.brand} 
+                endDate={params.row.end_date || null} 
+                platform={operator}
                 onUpdate={(campaignId, newBudget) => {
                     console.log("Updating campaign:", campaignId, "New budget:", newBudget);
+                    // Mark that data was mutated
+                    dataMutated.current = true;
+                    // Clear cache so next fetch gets fresh data
+                    clearCampaignCaches();
+                    // Optimistically update local state
                     setCampaignsData(prevData => {
                         const updatedData = {
                             ...prevData,
@@ -78,9 +117,14 @@ const CampaignsComponent = (props, ref) => {
                         console.log("Updated campaignsData:", updatedData);
                         return updatedData;
                     });
-                }} onSnackbarOpen={handleSnackbarOpen} />,
+                    // DON'T fetch fresh data immediately - rely on optimistic update
+                    // Fresh data will be fetched on next navigation/filter change
+                }} 
+                onSnackbarOpen={handleSnackbarOpen} 
+            />,
             headerAlign: "left",
-            type: "number", align: "left",
+            type: "number", 
+            align: "left",
         },
         {
             field: "status",
@@ -106,8 +150,8 @@ const CampaignsComponent = (props, ref) => {
                         checked={isActive}
                         onChange={() => handleToggle(
                             params.row.campaign_id,
-                            isActive ? 0 : 1,  // New status to be set
-                            params.row.ad_type  // Pass ad_type from row data
+                            isActive ? 0 : 1,
+                            params.row.ad_type
                         )}
                     />
                 );
@@ -224,6 +268,27 @@ const CampaignsComponent = (props, ref) => {
         }
     ];
 
+    const normalizedBrands = useMemo(() => {
+        const source = brands;
+        if (!source) return [];
+        if (Array.isArray(source)) {
+            if (source.length === 0) return [];
+            if (typeof source[0] === "string") return source;
+            return source
+                .map((item) => item?.brand_name || item?.brand || item?.name)
+                .filter(Boolean);
+        }
+        if (Array.isArray(source?.data)) {
+            const arr = source.data;
+            if (arr.length === 0) return [];
+            if (typeof arr[0] === "string") return arr;
+            return arr
+                .map((item) => item?.brand_name || item?.brand || item?.name)
+                .filter(Boolean);
+        }
+        return [];
+    }, [brands]);
+
     const getCampaignsData = async (forceRefresh = false) => {
         if (!operator) return;
 
@@ -249,7 +314,10 @@ const CampaignsComponent = (props, ref) => {
 
         try {
             const ts = forceRefresh ? `&_=${Date.now()}` : "";
-            const url = `https://react-api-script.onrender.com/samsonite/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}${ts}`;
+            let url = `https://react-api-script.onrender.com/samsonite/campaign?start_date=${startDate}&end_date=${endDate}&platform=${operator}${ts}`;
+            if (selectedBrand && typeof selectedBrand === "string") {
+                url += `&brand_name=${encodeURIComponent(selectedBrand)}`;
+            }
             const cacheKey = `cache:GET:${url}`;
 
             if (forceRefresh) {
@@ -295,6 +363,7 @@ const CampaignsComponent = (props, ref) => {
 
     const handleRefresh = async () => {
         console.log("Refresh clicked: forcing network fetch");
+        clearCampaignCaches();
         getCampaignsData(true);
     };
 
@@ -302,11 +371,28 @@ const CampaignsComponent = (props, ref) => {
         refresh: handleRefresh
     }));
 
-    const abortControllerRef = useRef(null);
-
+    // Effect to handle component mount and parameter changes
     useEffect(() => {
+        if (abortControllerRef.current) {
+            abortControllerRef.current.abort();
+        }
+
+        // Mark component as active when this effect runs
+        isComponentActive.current = true;
+
         const timeout = setTimeout(() => {
-            getCampaignsData();
+            if (localStorage.getItem("accessToken")) {
+                // Check if we're returning to component after a mutation happened
+                if (dataMutated.current && isComponentActive.current) {
+                    console.log("Component switched back after mutation, fetching fresh data");
+                    clearCampaignCaches();
+                    getCampaignsData(true);
+                    dataMutated.current = false; // Reset the flag after fetching
+                } else {
+                    console.log("Normal navigation, using cache if available");
+                    getCampaignsData(false); // Use cache
+                }
+            }
         }, 100);
 
         return () => {
@@ -314,15 +400,28 @@ const CampaignsComponent = (props, ref) => {
                 abortControllerRef.current.abort();
             }
             clearTimeout(timeout);
+            // Mark component as inactive when unmounting
+            isComponentActive.current = false;
         }
-    }, [operator, dateRange]);
+    }, [operator, dateRange, selectedBrand]);
+
+    // Component lifecycle tracking - detect when component becomes visible again
+    useEffect(() => {
+        // Component is mounting/becoming visible
+        isComponentActive.current = true;
+        
+        return () => {
+            // Component is unmounting/becoming hidden
+            isComponentActive.current = false;
+        };
+    }, []);
+
+    useEffect(() => {
+        try { getBrandsData(); } catch (_) {}
+    }, [operator]);
 
     const columns = useMemo(() => {
-        if (operator === "Amazon") return CampaignsColumnAmazon;
-        if (operator === "Zepto") return CampaignsColumnZepto;
         if (operator === "Flipkart") return CampaignsColumnFlipkart;
-        if (operator === "Swiggy") return CampaignsColumnSwiggy;
-       
         return [];
     }, [operator, brands, updatingCampaigns]);
 
@@ -331,7 +430,10 @@ const CampaignsComponent = (props, ref) => {
             const token = localStorage.getItem("accessToken");
             const startDate = formatDate(dateRange[0].startDate);
             const endDate = formatDate(dateRange[0].endDate);
-            const url = `https://react-api-script.onrender.com/samsonite/campaign_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}`;
+            let url = `https://react-api-script.onrender.com/samsonite/campaign_graph?start_date=${formatDate(startDate)}&end_date=${formatDate(endDate)}&platform=${operator}&campaign_id=${campaignId}`;
+            if (selectedBrand && typeof selectedBrand === "string") {
+                url += `&brand_name=${encodeURIComponent(selectedBrand)}`;
+            }
             const cacheKey = `cache:GET:${url}`;
 
             const cached = getCache(cacheKey);
@@ -359,12 +461,11 @@ const CampaignsComponent = (props, ref) => {
     };
 
     const handleToggle = (campaignId, newStatus, adType) => {
-        // Show confirmation dialog with the new status that will be set
         setConfirmation({ 
             show: true, 
             campaignId, 
-            campaignType: newStatus, // This will be the new status (0 or 1)
-            adType // Add adType to confirmation state
+            campaignType: newStatus,
+            adType
         });
     };
 
@@ -380,10 +481,13 @@ const CampaignsComponent = (props, ref) => {
             
             const requestBody = {
                 campaign_id: campaignId,
-                ad_type: adType
+                ad_type: adType,
+                brand: selectedBrand
             };
 
-            const response = await fetch(`https://react-api-script.onrender.com/samsonite/campaign-play-pause?platform=${operator}`, {
+            const playPauseUrl = `https://react-api-script.onrender.com/samsonite/campaign-play-pause?platform=${operator}`;
+
+            const response = await fetch(playPauseUrl, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
@@ -392,31 +496,46 @@ const CampaignsComponent = (props, ref) => {
                 body: JSON.stringify(requestBody)
             });
 
-            if (!response.ok) throw new Error("Failed to update campaign status");
+            if (!response.ok) {
+                throw new Error(`Failed to update campaign status: ${response.status} ${response.statusText}`);
+            }
 
             const data = await response.json();
             console.log("Campaign status updated successfully", data);
 
-            // Update the local state to reflect the new status
+            // Mark that data was mutated (for next navigation/filter change)
+            dataMutated.current = true;
+            
+            // Clear all campaign-related caches so next fetch gets fresh data
+            clearCampaignCaches();
+
+            // Update local state with the new status (optimistic update)
+            // Use the status returned from API, or fallback to newStatus
+            const updatedStatus = data.status !== undefined ? data.status : newStatus;
+            
             setCampaignsData(prevData => ({
                 ...prevData,
                 data: prevData.data.map(campaign =>
                     campaign.campaign_id === campaignId
-                        ? { ...campaign, status: newStatus }
+                        ? { ...campaign, status: updatedStatus }
                         : campaign
                 )
             }));
 
             setUpdatingCampaigns(prev => ({ ...prev, [campaignId]: false }));
-            handleSnackbarOpen("Campaign status updated successfully!", "success");
+            handleSnackbarOpen(data.message || "Campaign status updated successfully!", "success");
+            
+            // DON'T fetch fresh data immediately - rely on optimistic update
+            // Fresh data will be fetched on next navigation/filter change due to dataMutated flag
             
         } catch (error) {
             console.error("Error updating campaign status:", error);
             handleSnackbarOpen("Error updating campaign status", "error");
             setUpdatingCampaigns(prev => ({ ...prev, [campaignId]: false }));
             
-            // Optionally refresh data on error to sync with server state
-            getCampaignsData();
+            // On error, revert the UI by fetching fresh data
+            clearCampaignCaches();
+            setTimeout(() => getCampaignsData(true), 500);
         }
     };
 

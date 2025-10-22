@@ -52,6 +52,7 @@ const HistoryDatatable = () => {
         { field: "property", headerName: "Property", minWidth: 150 },
         { field: "from_value", headerName: "FROM", minWidth: 150 },
         { field: "to_value", headerName: "TO", minWidth: 150 },
+        { field: "difference", headerName: "DIFFERENCE", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
         { field: "nature", headerName: "Nature", minWidth: 150 },
         { field: "source_name", headerName: "Source Name", minWidth: 150 },
         { field: "campaign_id", headerName: "Campaign ID", minWidth: 150 },
@@ -81,6 +82,23 @@ const HistoryDatatable = () => {
         { field: "user_name", headerName: "User Name", minWidth: 150 },
         { field: "suggestion", headerName: "Suggestion", minWidth: 300 },
     ];
+
+    // Function to calculate difference between to_value and from_value
+    const calculateDifference = (fromValue, toValue) => {
+        // Try to parse both values as numbers
+        const from = parseFloat(fromValue);
+        const to = parseFloat(toValue);
+        
+        // Check if both are valid numbers
+        if (!isNaN(from) && !isNaN(to)) {
+            const diff = to - from;
+            // Return with 2 decimal places
+            return diff.toFixed(2);
+        }
+        
+        // If either value is not a number, return empty string or dash
+        return '-';
+    };
 
     const getHistoryData = async () => {
         if (!operator) return;
@@ -115,6 +133,18 @@ const HistoryDatatable = () => {
             }
 
             const data = await response.json();
+            
+            // Add difference calculation for Flipkart data
+            if (operator === "Flipkart" && data?.data) {
+                data.data = data.data.map(row => {
+                    const difference = calculateDifference(row.from_value, row.to_value);
+                    return { 
+                        ...row, 
+                        difference: difference 
+                    };
+                });
+            }
+            
             setHistoryData(data);
         } catch (error) {
             if (error.name === "AbortError") {
