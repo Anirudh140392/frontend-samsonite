@@ -52,7 +52,7 @@ const HistoryDatatable = () => {
         { field: "property", headerName: "Property", minWidth: 150 },
         { field: "from_value", headerName: "FROM", minWidth: 150 },
         { field: "to_value", headerName: "TO", minWidth: 150 },
-        { field: "difference", headerName: "DIFFERENCE", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
+        { field: "difference", headerName: "DIFF AMOUNT", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
         { field: "nature", headerName: "Nature", minWidth: 150 },
         { field: "source_name", headerName: "Source Name", minWidth: 150 },
         { field: "campaign_id", headerName: "Campaign ID", minWidth: 150 },
