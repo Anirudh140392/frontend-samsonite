@@ -24,25 +24,7 @@ const HistoryDatatable = () => {
         { field: "source_name", headerName: "SOURCE NAME", minWidth: 150 },
     ];
 
-      const HistoryColumnsZepto = [
-        { field: "date", headerName: "Date", minWidth: 150 },
-        { field: "time", headerName: "Time", minWidth: 150 },
-        { field: "module", headerName: "Module", minWidth: 150 },
-        { field: "type", headerName: "Type", minWidth: 150 },
-        { field: "property", headerName: "Property", minWidth: 150 },
-        { field: "from_value", headerName: "FROM", minWidth: 150 },
-        { field: "to_value", headerName: "TO", minWidth: 150 },
-        { field: "nature", headerName: "Nature", minWidth: 150 },
-        { field: "source_name", headerName: "Source Name", minWidth: 150 },
-        { field: "campaign_id", headerName: "Campaign ID", minWidth: 150 },
-        { field: "campaign_name", headerName: "Campaign Name", minWidth: 250 },
-        { field: "keyword", headerName: "Keyword", minWidth: 150 },
-        { field: "total_keywords", headerName: "Total Keywords", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
-        { field: "updated_keywords", headerName: "Updated Keywords", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
-        { field: "platform", headerName: "Platform", minWidth: 150 },
-        { field: "user_name", headerName: "User Name", minWidth: 150 }
-
-    ];
+     
 
     const HistoryColumnsFlipkart = [
         { field: "date", headerName: "Date", minWidth: 150 },
@@ -58,6 +40,7 @@ const HistoryDatatable = () => {
         { field: "campaign_id", headerName: "Campaign ID", minWidth: 150 },
         { field: "campaign_name", headerName: "Campaign Name", minWidth: 250 },
         { field: "keyword_name", headerName: "Keyword", minWidth: 150 },
+        { field: "revert", headerName: "Revert", minWidth: 150 },
         { field: "total_keywords", headerName: "Total Keywords", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
         { field: "updated_keywords", headerName: "Updated Keywords", minWidth: 150, type: "number", align: "left", headerAlign: "left" },
         { field: "platform", headerName: "Platform", minWidth: 150 },
@@ -66,22 +49,7 @@ const HistoryDatatable = () => {
     ];
 
 
-     const HistoryColumnsSwiggy = [
-        { field: "date", headerName: "Date", minWidth: 150 },
-        { field: "time", headerName: "Time", minWidth: 150 },
-        { field: "module", headerName: "Module", minWidth: 150 },
-        { field: "type", headerName: "Type", minWidth: 150 },
-        { field: "property", headerName: "Property", minWidth: 150 },
-        { field: "from_value", headerName: "FROM", minWidth: 150 },
-        { field: "to_value", headerName: "TO", minWidth: 150 },
-        { field: "nature", headerName: "Nature", minWidth: 150 },
-        { field: "source_name", headerName: "Source Name", minWidth: 150 },
-        { field: "campaign_name", headerName: "Campaign Name", width: 250 },
-        { field: "keyword", headerName: "Keyword", minWidth: 150 },
-        { field: "platform", headerName: "Platform", minWidth: 150 },
-        { field: "user_name", headerName: "User Name", minWidth: 150 },
-        { field: "suggestion", headerName: "Suggestion", minWidth: 300 },
-    ];
+
 
     // Function to calculate difference between to_value and from_value
     const calculateDifference = (fromValue, toValue) => {
@@ -178,7 +146,7 @@ const HistoryDatatable = () => {
             case "Swiggy": return HistoryColumnsSwiggy;
             case "Flipkart": return HistoryColumnsFlipkart;
             
-            default: return HistoryColumnsZepto;
+            default: return HistoryColumnsFlipkart;
         }
     }, [operator]);
 
