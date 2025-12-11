@@ -19,6 +19,7 @@ import axios from "axios";
 import { cachedAxiosGet } from "./services/cachedAxios";
 import { getCache } from "./services/cacheUtils";
 
+
 const RedirectLink = ({ url, label, pathName, onClick }) => {
     return (
         <Link
@@ -50,6 +51,13 @@ const RedirectLink = ({ url, label, pathName, onClick }) => {
                 />
             ) : label === "Product Analytics" ? (
                 <ProductIntelligentCenterIcon
+                    iconClass="me-2"
+                    iconWidth="15"
+                    iconHeight="15"
+                    iconColor={pathName === url ? "#fff" : "#78a8df"}
+                />
+                 ) : label === "Visibility" ? (
+                <BlockersIcon
                     iconClass="me-2"
                     iconWidth="15"
                     iconHeight="15"
@@ -402,6 +410,24 @@ const Navbar = () => {
                                         onClick={() =>
                                             setPathName(
                                                 `/product-analytics${operatorTypeParams === ""
+                                                    ? `?operator=${OPERATOR.AMAZON}`
+                                                    : operatorTypeParams
+                                                }`
+                                            )
+                                        }
+                                    />
+                                )}
+                                 {["Amazon","Zepto","BigBasket","Flipkart"].includes(operatorName) && (
+                                    <RedirectLink
+                                        url={`/visibility${operatorTypeParams === ""
+                                            ? `?operator=${OPERATOR.AMAZON}`
+                                            : operatorTypeParams
+                                            }`}
+                                        label="Visibility"
+                                        pathName={pathName}
+                                        onClick={() =>
+                                            setPathName(
+                                                `/visibility${operatorTypeParams === ""
                                                     ? `?operator=${OPERATOR.AMAZON}`
                                                     : operatorTypeParams
                                                 }`

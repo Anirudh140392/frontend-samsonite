@@ -11,6 +11,7 @@ import NegativeKeywordsComponent from "./assets/pages/negativeKeywords";
 import SmartControl from "./assets/pages/smartControl";
 import ProductAnalyticsComponent from "./assets/pages/productAnalytics";
 import SearchTermInsights from "./assets/pages/searchTermInsights";
+import Visibility from "./assets/components/functional/performanceOverview/overview/VisibilityComponent";
 
 
 
@@ -40,6 +41,7 @@ function App() {
            <Route path="/product-analytics" element={isLoggedIn ? <ProductAnalyticsComponent /> : <Navigate to="/login" />} />
 
           <Route path="/rules" element={isLoggedIn ? <SmartControl /> : <Navigate to="/login" />} />
+          <Route path="/visibility" element={isLoggedIn ? <Visibility />: <Navigate to="/login" />} />
           <Route path="/negative-keywords" element={isLoggedIn ? <NegativeKeywordsComponent /> : <Navigate to="/login" />} />
           <Route path="/history" element={isLoggedIn ? <History /> : <Navigate to="/login" />} />
           
